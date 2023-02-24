@@ -20,7 +20,7 @@
 
     <!--Open Graph Title-->
     
-        <meta property="og:title" content="API安全最佳实践--JWT(JSON WEB令牌)(第二篇)"/>
+        <meta property="og:title" content="API安全最佳实践--OAuth(第四篇)"/>
     
 
     <!--Open Graph Description-->
@@ -47,7 +47,7 @@
 
     <!-- Title -->
     
-    <title>API安全最佳实践--JWT(JSON WEB令牌)(第二篇) - wuqiang-个人博客网站</title>
+    <title>API安全最佳实践--OAuth(第四篇) - wuqiang-个人博客网站</title>
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
@@ -129,13 +129,13 @@
 
     <div class="post-header">
         <h1 class="title">
-            <a href="/2023/02/22/API%E5%AE%89%E5%85%A8%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5--JWT(JSON%20WEB%E4%BB%A4%E7%89%8C)(%E7%AC%AC%E4%BA%8C%E7%AF%87)/">
-                API安全最佳实践--JWT(JSON WEB令牌)(第二篇)
+            <a href="/2023/02/23/API%E5%AE%89%E5%85%A8%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5-OAuth-%E7%AC%AC%E5%9B%9B%E7%AF%87/">
+                API安全最佳实践--OAuth(第四篇)
             </a>
         </h1>
         <div class="post-info">
             
-                <span class="date">2023-02-22</span>
+                <span class="date">2023-02-23</span>
             
             
             
@@ -148,11 +148,10 @@
         
 
         <!-- Post Content -->
-        <h4 id="1-使用较好的“JWT-Secret”使暴力攻击变得困难"><a href="#1-使用较好的“JWT-Secret”使暴力攻击变得困难" class="headerlink" title="1.使用较好的“JWT Secret”使暴力攻击变得困难"></a>1.使用较好的“JWT Secret”使暴力攻击变得困难</h4><p>你应该有一个很好的JWT Secret来防止令牌回火以及避免暴力攻击。强密钥应该是随机生成的、长的、复杂的，并且应该安全地存储并定期轮换。</p>
-<h4 id="2-不从标头提取算法，使用后端"><a href="#2-不从标头提取算法，使用后端" class="headerlink" title="2.不从标头提取算法，使用后端"></a>2.不从标头提取算法，使用后端</h4><p>从JWT令牌的头部提取算法可能会带来安全风险，因为攻击者可能会修改算法并可能获得未经授权的访问。因此，建议在后端验证算法，而不是从标头中提取算法。这有助于确保用于签名和验证令牌的算法是安全的，并且没有被篡改。</p>
-<h4 id="3-使令牌过期（TTL、RTTL）尽可能短"><a href="#3-使令牌过期（TTL、RTTL）尽可能短" class="headerlink" title="3.使令牌过期（TTL、RTTL）尽可能短"></a>3.使令牌过期（TTL、RTTL）尽可能短</h4><p>令牌到期时间应设置为合理的时间，设置短令牌过期时间（TTL、RTTL）对于安全目的非常重要，因为它可以减少漏洞窗口，限制令牌被盗的影响，并提高整体安全性。然而，到期时间应该与可用性相平衡，因为设置得太短可能会给用户带来不便并降低生产力。</p>
-<h4 id="4-避免在JWT负载中存储敏感数据"><a href="#4-避免在JWT负载中存储敏感数据" class="headerlink" title="4.避免在JWT负载中存储敏感数据"></a>4.避免在JWT负载中存储敏感数据</h4><p>将敏感数据存储在JWT令牌负载中会增加数据泄露和其他安全事件的风险。如果攻击者能够获取或篡改令牌，他们可能会访问存储在有效负载中的敏感数据</p>
-<h4 id="5-保持有效负载较小以减小JWT令牌的大小"><a href="#5-保持有效负载较小以减小JWT令牌的大小" class="headerlink" title="5.保持有效负载较小以减小JWT令牌的大小"></a>5.保持有效负载较小以减小JWT令牌的大小</h4><p>较小的有效负载可以减少网络开销，提高处理速度，并降低旨在使系统过载的攻击风险。</p>
+        <h4 id="1-始终在服务器端验证“redirect-uri”"><a href="#1-始终在服务器端验证“redirect-uri”" class="headerlink" title="1.始终在服务器端验证“redirect_uri”"></a>1.始终在服务器端验证“redirect_uri”</h4><p>在服务器端验证“redirect_uri”以防止打开的重定向攻击。在OAuth中，redirect_uri是一个参数，指定身份验证完成后授权服务器应将用户重定向到的uri（统一资源标识符）。在OAuth流中经常使用redirect_uri来向客户端应用程序返回授权代码或访问令牌。在服务器端验证redirect_uri以防止诸如开放重定向攻击之类的攻击非常重要。在开放重定向攻击中，攻击者可以修改redirect_uri参数，将用户重定向到恶意网站。通过在服务器端验证redirect_uri，可以确保重定向uri是客户端应用程序的有效且授权的uri。在服务器端验证redirect_uri还可以防止其他类型的攻击，如网络钓鱼攻击或跨站点请求伪造（CSRF）攻击。通过验证redirect_uri是否与预定义的授权uri列表匹配，可以确保用户在身份验证完成后重定向到受信任的站点。</p>
+<h4 id="2-避免使用“response-type-token”并尝试交换代码"><a href="#2-避免使用“response-type-token”并尝试交换代码" class="headerlink" title="2.避免使用“response_type=token”并尝试交换代码"></a>2.避免使用“response_type=token”并尝试交换代码</h4><p>在OAuth中，response_type=token是一种直接从授权端点获取访问令牌的方法，无需使用授权代码。这种方法被称为隐式授权流。但是，建议避免使用response_type=token，而是使用授权代码授予流，其中客户端将授权代码交换为访问令牌。这是因为隐式授权流可能不如授权代码授权流安全。原因是访问令牌在重定向URI的URL片段中直接返回给客户端。这意味着访问令牌可能被拦截或暴露在浏览器历史记录或服务器日志中。相反，对于授权码授权流，只有在客户端使用安全的服务器到服务器通信交换了用于令牌的授权码之后，才将访问令牌返回给客户端。因此，通过使用授权代码授权流而不是隐式授权流，可以帮助保护访问令牌不被恶意参与者暴露或拦截。</p>
+<h4 id="3-使用“state”参数防止CSRF攻击"><a href="#3-使用“state”参数防止CSRF攻击" class="headerlink" title="3.使用“state”参数防止CSRF攻击"></a>3.使用“state”参数防止CSRF攻击</h4><p>在OAuth中，状态参数被用作防止CSRF（跨站点请求伪造）攻击的安全措施。当恶意网站或脚本代表当前经过身份验证的用户向合法网站发送请求时，就会发生CSRF攻击。为了防止CSRF攻击，状态参数用于存储客户端应用程序在发起授权请求之前生成的唯一值。该值包含在授权请求中，然后在将用户重定向回客户端应用程序时由授权服务器验证。如果授权响应中的状态值与客户端应用程序发送的状态值匹配，则认为授权有效，并将访问令牌返回给客户端。通过使用状态参数，您可以帮助防止恶意参与者拦截或修改传输中的授权请求，因为唯一的状态值只有客户端应用程序和授权服务器才知道。这有助于确保OAuth流的完整性和安全性，并防止CSRF攻击。</p>
+<h4 id="4-具有默认范围，并验证每个应用程序的范围"><a href="#4-具有默认范围，并验证每个应用程序的范围" class="headerlink" title="4.具有默认范围，并验证每个应用程序的范围"></a>4.具有默认范围，并验证每个应用程序的范围</h4><p>在OAuth中，作用域用于指定在代表用户访问受保护资源时授予客户端应用程序的权限和访问级别。具有默认作用域并验证每个应用程序的作用域的最佳实践很重要，因为它有助于确保客户端应用程序只能访问其所需的资源，并且用户只向每个应用程序授予必要的权限。默认范围是默认情况下授予所有客户端应用程序的一组权限，除非用户另有指定。通过使用默认范围，可以确保所有应用程序都受到相同的基线安全和访问控制。除了具有默认范围外，还建议验证每个应用程序的范围。这意味着，当用户授予对应用程序的访问权时，服务器应进行检查，以确保请求的作用域有效且适用于该应用程序。这有助于防止恶意应用程序请求过度权限或未经授权访问用户数据。通过使用默认作用域并验证每个应用程序的作用域，可以帮助确保OAuth流是安全的，并且客户端应用程序只访问它们所需的资源和权限。</p>
 
     </div>
 

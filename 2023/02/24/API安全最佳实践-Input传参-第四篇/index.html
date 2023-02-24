@@ -20,7 +20,7 @@
 
     <!--Open Graph Title-->
     
-        <meta property="og:title" content="API安全最佳实践--JWT(JSON WEB令牌)(第二篇)"/>
+        <meta property="og:title" content="API安全最佳实践--Input传参(第四篇)"/>
     
 
     <!--Open Graph Description-->
@@ -47,7 +47,7 @@
 
     <!-- Title -->
     
-    <title>API安全最佳实践--JWT(JSON WEB令牌)(第二篇) - wuqiang-个人博客网站</title>
+    <title>API安全最佳实践--Input传参(第四篇) - wuqiang-个人博客网站</title>
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
@@ -129,13 +129,13 @@
 
     <div class="post-header">
         <h1 class="title">
-            <a href="/2023/02/22/API%E5%AE%89%E5%85%A8%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5--JWT(JSON%20WEB%E4%BB%A4%E7%89%8C)(%E7%AC%AC%E4%BA%8C%E7%AF%87)/">
-                API安全最佳实践--JWT(JSON WEB令牌)(第二篇)
+            <a href="/2023/02/24/API%E5%AE%89%E5%85%A8%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5-Input%E4%BC%A0%E5%8F%82-%E7%AC%AC%E5%9B%9B%E7%AF%87/">
+                API安全最佳实践--Input传参(第四篇)
             </a>
         </h1>
         <div class="post-info">
             
-                <span class="date">2023-02-22</span>
+                <span class="date">2023-02-24</span>
             
             
             
@@ -148,11 +148,12 @@
         
 
         <!-- Post Content -->
-        <h4 id="1-使用较好的“JWT-Secret”使暴力攻击变得困难"><a href="#1-使用较好的“JWT-Secret”使暴力攻击变得困难" class="headerlink" title="1.使用较好的“JWT Secret”使暴力攻击变得困难"></a>1.使用较好的“JWT Secret”使暴力攻击变得困难</h4><p>你应该有一个很好的JWT Secret来防止令牌回火以及避免暴力攻击。强密钥应该是随机生成的、长的、复杂的，并且应该安全地存储并定期轮换。</p>
-<h4 id="2-不从标头提取算法，使用后端"><a href="#2-不从标头提取算法，使用后端" class="headerlink" title="2.不从标头提取算法，使用后端"></a>2.不从标头提取算法，使用后端</h4><p>从JWT令牌的头部提取算法可能会带来安全风险，因为攻击者可能会修改算法并可能获得未经授权的访问。因此，建议在后端验证算法，而不是从标头中提取算法。这有助于确保用于签名和验证令牌的算法是安全的，并且没有被篡改。</p>
-<h4 id="3-使令牌过期（TTL、RTTL）尽可能短"><a href="#3-使令牌过期（TTL、RTTL）尽可能短" class="headerlink" title="3.使令牌过期（TTL、RTTL）尽可能短"></a>3.使令牌过期（TTL、RTTL）尽可能短</h4><p>令牌到期时间应设置为合理的时间，设置短令牌过期时间（TTL、RTTL）对于安全目的非常重要，因为它可以减少漏洞窗口，限制令牌被盗的影响，并提高整体安全性。然而，到期时间应该与可用性相平衡，因为设置得太短可能会给用户带来不便并降低生产力。</p>
-<h4 id="4-避免在JWT负载中存储敏感数据"><a href="#4-避免在JWT负载中存储敏感数据" class="headerlink" title="4.避免在JWT负载中存储敏感数据"></a>4.避免在JWT负载中存储敏感数据</h4><p>将敏感数据存储在JWT令牌负载中会增加数据泄露和其他安全事件的风险。如果攻击者能够获取或篡改令牌，他们可能会访问存储在有效负载中的敏感数据</p>
-<h4 id="5-保持有效负载较小以减小JWT令牌的大小"><a href="#5-保持有效负载较小以减小JWT令牌的大小" class="headerlink" title="5.保持有效负载较小以减小JWT令牌的大小"></a>5.保持有效负载较小以减小JWT令牌的大小</h4><p>较小的有效负载可以减少网络开销，提高处理速度，并降低旨在使系统过载的攻击风险。</p>
+        <h4 id="1-操作的用户专有HTTP方法"><a href="#1-操作的用户专有HTTP方法" class="headerlink" title="1.操作的用户专有HTTP方法"></a>1.操作的用户专有HTTP方法</h4><p>根据操作使用正确的HTTP方法：GET（读取）、POST（创建）、PUT/PATCH（替换/更新）和DELETE（删除记录），如果请求的方法不适合请求的资源，则使用405 method Not Allowed（不允许方法）进行响应。</p>
+<h4 id="2-验证请求标头上的“内容类型"><a href="#2-验证请求标头上的“内容类型" class="headerlink" title="2.验证请求标头上的“内容类型"></a>2.验证请求标头上的“内容类型</h4><p>验证请求标头上的内容类型以防止XSS攻击。验证请求上的Content-Type标头有助于确保请求数据为预期格式，并降低诸如注入攻击或跨站点脚本（XSS）之类的攻击风险，从而使API更加安全。</p>
+<h4 id="3-验证用户输入以避免常见漏洞"><a href="#3-验证用户输入以避免常见漏洞" class="headerlink" title="3.验证用户输入以避免常见漏洞"></a>3.验证用户输入以避免常见漏洞</h4><p>验证用户输入以避免常见漏洞。用户输入是web应用程序中常见的漏洞来源。这是因为在web应用程序中使用用户输入之前，用户输入通常没有得到正确的验证、净化或转义。这可能允许攻击者操纵输入并执行恶意代码，或导致应用程序出现意外行为。</p>
+<h4 id="4-对敏感数据使用标准授权标头"><a href="#4-对敏感数据使用标准授权标头" class="headerlink" title="4.对敏感数据使用标准授权标头"></a>4.对敏感数据使用标准授权标头</h4><p>使用标准授权标头发送令牌，而不是自定义标头或查询/正文参数。通常不建议在查询或正文参数中发送令牌，因为这些参数可能会被各种系统（包括web服务器、代理和网关）记录或缓存。这可能会导致敏感数据的泄露，包括身份验证令牌。此外，在查询或正文参数中发送令牌会使它们更容易受到跨站点请求伪造（CSRF）攻击。在CSRF攻击中，攻击者可以诱骗用户提交包含其身份验证令牌的请求，然后攻击者可以使用该令牌模拟用户并访问其帐户。相比之下，使用Authorization标头发送令牌有助于确保令牌不被中间系统记录或缓存，并且还可以通过允许服务器在处理请求之前验证令牌来帮助防止CSRF攻击。</p>
+<h4 id="5-仅使用服务器端加密"><a href="#5-仅使用服务器端加密" class="headerlink" title="5.仅使用服务器端加密"></a>5.仅使用服务器端加密</h4><p>使用服务器端加密而不是客户端加密。不建议使用客户端加密，因为客户端代码库可以很容易地进行反向工程，这可能会导致加密算法的泄露。</p>
+<h4 id="6-使用API网关进行缓存、速率限制策略等"><a href="#6-使用API网关进行缓存、速率限制策略等" class="headerlink" title="6.使用API网关进行缓存、速率限制策略等"></a>6.使用API网关进行缓存、速率限制策略等</h4><p>使用API网关进行缓存、速率限制策略和其他安全功能。API网关可以通过提供用于管理和保护API流量的集中控制点，使您的API更加安全。以下是API网关可以提高API安全性的几种方法：<br>1、认证和授权：API网关可以处理用户认证和授权，从而减轻单个API的负担，并提高整个组织的一致性。这可以包括JWT验证、OAuth和其他身份验证机制等技术。<br>2、流量过滤和速率限制：API网关可以强制流量过滤和流量限制，以保护API免受DDoS攻击、暴力攻击和其他类型的滥用。<br>3、加密和解密：API网关可以处理敏感数据的加密和解密，以防止数据泄露和被盗。<br>4、日志记录和监视：API网关可以提供API流量的集中日志记录和监控，帮助识别和响应安全威胁和其他问题。<br>5、与安全工具集成：API网关可以与WAF、SIEM和其他安全工具等安全工具集成，以提供额外的保护层。</p>
 
     </div>
 
